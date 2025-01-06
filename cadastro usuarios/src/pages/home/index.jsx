@@ -1,24 +1,28 @@
 import "./style.css";
 import Trash from "../../assets/trash.png";
+import api  from "../../services/api";
+import { useEffect, useState } from "react"; // userefect vai executar sempre que a pagina abrir 
+
 
 function Home() {
-  const users = [
-    {
-      id: "2faf4a5f44f54",
-      name: "Vinicius",
-      age: 33,
-      email: "vini@gmail.com",
-    },
-    { id: "51fafaf54f", 
-      name: "Maria", 
-      age: 13, 
-      email: "maria@gmail.com" },
-      { id: "hdjgj154jg45f5", 
-        name: "Heloise", 
-        age: 20, 
-        email: "helo@gmail.com" }
-      
-  ];
+
+  // aqui são declarados estados do react, USERS é minha variavel e declarando dessa forma eu consigo mudar e mostrar na tela
+  const [users, setUsers] = useState([])
+
+  async function getUsers(){
+
+    const userFromApi = await api.get('/users')
+    
+    setUsers(userFromApi.data) // agora sim ele altera os usarios e mostra na tela
+    console.log(users)
+
+  }
+
+  useEffect(() => {
+
+    getUsers()
+
+  },[])
 
   return (
     <div className="containe">
